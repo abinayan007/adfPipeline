@@ -1,0 +1,45 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "flightaware-demo-adf1"
+		},
+		"AzureFunction1_functionKey": {
+			"value": ""
+		},
+		"Flight_Aware_Firehose_functionKey": {
+			"value": ""
+		},
+		"flightAware_functionKey": {
+			"value": ""
+		},
+		"ls_oag_snowflake_password": {
+			"value": ""
+		},
+		"AeroApiRestService_properties_typeProperties_url": {
+			"value": "https://aeroapi.flightaware.com"
+		},
+		"AzureFunction1_properties_typeProperties_functionAppUrl": {
+			"value": "https://flightawaretest.azurewebsites.net"
+		},
+		"Flight_Aware_Firehose_properties_typeProperties_functionAppUrl": {
+			"value": "https://flight-aware-test.azurewebsites.net"
+		},
+		"OAGDirect_properties_typeProperties_url": {
+			"value": "https://api.oag.com/locations/"
+		},
+		"akv-service_properties_typeProperties_baseUrl": {
+			"value": "https://flightaware-dev-key.vault.azure.net/"
+		},
+		"blob-storage-service_properties_typeProperties_connectionString_secretName": {
+			"value": "blob-storage-key1"
+		},
+		"flightAware_properties_typeProperties_functionAppUrl": {
+			"value": "https://flight-aware.azurewebsites.net"
+		},
+		"ls_oag_snowflake_properties_typeProperties_database": {
+			"value": "OAG_SCHEDULES"
+		}
+	}
+}

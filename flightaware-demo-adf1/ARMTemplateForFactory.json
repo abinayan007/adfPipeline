@@ -1,0 +1,505 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "flightaware-demo-adf1"
+		},
+		"AzureFunction1_functionKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'functionKey' of 'AzureFunction1'"
+		},
+		"Flight_Aware_Firehose_functionKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'functionKey' of 'Flight_Aware_Firehose'"
+		},
+		"flightAware_functionKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'functionKey' of 'flightAware'"
+		},
+		"ls_oag_snowflake_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ls_oag_snowflake'"
+		},
+		"AeroApiRestService_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://aeroapi.flightaware.com"
+		},
+		"AzureFunction1_properties_typeProperties_functionAppUrl": {
+			"type": "string",
+			"defaultValue": "https://flightawaretest.azurewebsites.net"
+		},
+		"Flight_Aware_Firehose_properties_typeProperties_functionAppUrl": {
+			"type": "string",
+			"defaultValue": "https://flight-aware-test.azurewebsites.net"
+		},
+		"OAGDirect_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://api.oag.com/locations/"
+		},
+		"akv-service_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://flightaware-dev-key.vault.azure.net/"
+		},
+		"blob-storage-service_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "blob-storage-key1"
+		},
+		"flightAware_properties_typeProperties_functionAppUrl": {
+			"type": "string",
+			"defaultValue": "https://flight-aware.azurewebsites.net"
+		},
+		"ls_oag_snowflake_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "OAG_SCHEDULES"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/OAG Direct flight info')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"additionalHeaders": {
+									"Cache-Control": "no-cache"
+								},
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "OAGDirect",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "OAGDirectSink",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/OAGDirect')]",
+				"[concat(variables('factoryId'), '/datasets/OAGDirectSink')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/livePipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "firehose",
+						"type": "AzureFunctionActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"functionName": "http_trigger",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"precom": "live",
+								"postcom": ""
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "Flight_Aware_Firehose",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-03-11T05:42:50Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Flight_Aware_Firehose')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "flightAware",
+						"type": "AzureFunctionActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"functionName": "http_trigger",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"precommand": "",
+								"post command": ""
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "flightAware",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-03-08T06:06:10Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/flightAware')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pitrPipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "firehose",
+						"type": "AzureFunctionActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"functionName": "http_trigger",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"precom": "pitr 1710115200",
+								"postcom": ""
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "Flight_Aware_Firehose",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-03-11T06:13:58Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Flight_Aware_Firehose')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OAGDirect')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OAGDirect",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OAGDirect')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OAGDirectSink')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob-storage-service",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@concat('output_', formatDateTime(utcnow(), 'yyyyMMddHHmmss'), '.json')",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@concat('output_', formatDateTime(utcnow(), 'yyyyMMddHHmmss'))",
+							"type": "Expression"
+						},
+						"container": "oag-direct"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/blob-storage-service')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RestResource1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AeroApiRestService",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": "/aeroapi/airports"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AeroApiRestService')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pandemicdata')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob-storage-service",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "data1"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/blob-storage-service')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AeroApiRestService')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('AeroApiRestService_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous",
+					"authHeaders": {
+						"x-apikey": {
+							"type": "SecureString",
+							"value": "**********"
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureFunction1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureFunction",
+				"typeProperties": {
+					"functionAppUrl": "[parameters('AzureFunction1_properties_typeProperties_functionAppUrl')]",
+					"functionKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureFunction1_functionKey')]"
+					},
+					"authentication": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Flight_Aware_Firehose')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureFunction",
+				"typeProperties": {
+					"functionAppUrl": "[parameters('Flight_Aware_Firehose_properties_typeProperties_functionAppUrl')]",
+					"functionKey": {
+						"type": "SecureString",
+						"value": "[parameters('Flight_Aware_Firehose_functionKey')]"
+					},
+					"authentication": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OAGDirect')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('OAGDirect_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous",
+					"authHeaders": {
+						"Subscription-Key": {
+							"type": "SecureString",
+							"value": "**********"
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/akv-service')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('akv-service_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/blob-storage-service')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "akv-service",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "[parameters('blob-storage-service_properties_typeProperties_connectionString_secretName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/akv-service')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/flightAware')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureFunction",
+				"typeProperties": {
+					"functionAppUrl": "[parameters('flightAware_properties_typeProperties_functionAppUrl')]",
+					"functionKey": {
+						"type": "SecureString",
+						"value": "[parameters('flightAware_functionKey')]"
+					},
+					"authentication": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_oag_snowflake')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SnowflakeV2",
+				"typeProperties": {
+					"authenticationType": "Basic",
+					"accountIdentifier": "ft63031.ap-southeast-1",
+					"user": "g.ramadoss@ncs.co",
+					"database": "[parameters('ls_oag_snowflake_properties_typeProperties_database')]",
+					"warehouse": "GENERAL",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('ls_oag_snowflake_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

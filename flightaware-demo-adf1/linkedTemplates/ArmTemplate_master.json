@@ -1,0 +1,126 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "flightaware-demo-adf1"
+		},
+		"AzureFunction1_functionKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'functionKey' of 'AzureFunction1'"
+		},
+		"Flight_Aware_Firehose_functionKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'functionKey' of 'Flight_Aware_Firehose'"
+		},
+		"flightAware_functionKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'functionKey' of 'flightAware'"
+		},
+		"ls_oag_snowflake_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ls_oag_snowflake'"
+		},
+		"AeroApiRestService_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://aeroapi.flightaware.com"
+		},
+		"AzureFunction1_properties_typeProperties_functionAppUrl": {
+			"type": "string",
+			"defaultValue": "https://flightawaretest.azurewebsites.net"
+		},
+		"Flight_Aware_Firehose_properties_typeProperties_functionAppUrl": {
+			"type": "string",
+			"defaultValue": "https://flight-aware-test.azurewebsites.net"
+		},
+		"OAGDirect_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://api.oag.com/locations/"
+		},
+		"akv-service_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://flightaware-dev-key.vault.azure.net/"
+		},
+		"blob-storage-service_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "blob-storage-key1"
+		},
+		"flightAware_properties_typeProperties_functionAppUrl": {
+			"type": "string",
+			"defaultValue": "https://flight-aware.azurewebsites.net"
+		},
+		"ls_oag_snowflake_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "OAG_SCHEDULES"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "flightaware-demo-adf1_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureFunction1_functionKey": {
+						"value": "[parameters('AzureFunction1_functionKey')]"
+					},
+					"Flight_Aware_Firehose_functionKey": {
+						"value": "[parameters('Flight_Aware_Firehose_functionKey')]"
+					},
+					"flightAware_functionKey": {
+						"value": "[parameters('flightAware_functionKey')]"
+					},
+					"ls_oag_snowflake_password": {
+						"value": "[parameters('ls_oag_snowflake_password')]"
+					},
+					"AeroApiRestService_properties_typeProperties_url": {
+						"value": "[parameters('AeroApiRestService_properties_typeProperties_url')]"
+					},
+					"AzureFunction1_properties_typeProperties_functionAppUrl": {
+						"value": "[parameters('AzureFunction1_properties_typeProperties_functionAppUrl')]"
+					},
+					"Flight_Aware_Firehose_properties_typeProperties_functionAppUrl": {
+						"value": "[parameters('Flight_Aware_Firehose_properties_typeProperties_functionAppUrl')]"
+					},
+					"OAGDirect_properties_typeProperties_url": {
+						"value": "[parameters('OAGDirect_properties_typeProperties_url')]"
+					},
+					"akv-service_properties_typeProperties_baseUrl": {
+						"value": "[parameters('akv-service_properties_typeProperties_baseUrl')]"
+					},
+					"flightAware_properties_typeProperties_functionAppUrl": {
+						"value": "[parameters('flightAware_properties_typeProperties_functionAppUrl')]"
+					},
+					"ls_oag_snowflake_properties_typeProperties_database": {
+						"value": "[parameters('ls_oag_snowflake_properties_typeProperties_database')]"
+					},
+					"blob-storage-service_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('blob-storage-service_properties_typeProperties_connectionString_secretName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
