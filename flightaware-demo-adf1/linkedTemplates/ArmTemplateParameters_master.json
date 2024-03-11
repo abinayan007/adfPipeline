@@ -27,7 +27,7 @@
 			"value": "https://flight-aware-test.azurewebsites.net"
 		},
 		"OAGDirect_properties_typeProperties_url": {
-			"value": "https://api.oag.com/locations/"
+			"value": "https://api.oag.com/flight-instances/"
 		},
 		"akv-service_properties_typeProperties_baseUrl": {
 			"value": "https://flightaware-dev-key.vault.azure.net/"

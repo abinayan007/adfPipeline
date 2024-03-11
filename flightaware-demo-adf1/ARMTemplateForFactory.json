@@ -37,7 +37,7 @@
 		},
 		"OAGDirect_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://api.oag.com/locations/"
+			"defaultValue": "https://api.oag.com/flight-instances/"
 		},
 		"akv-service_properties_typeProperties_baseUrl": {
 			"type": "string",
@@ -416,13 +416,7 @@
 				"typeProperties": {
 					"url": "[parameters('OAGDirect_properties_typeProperties_url')]",
 					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous",
-					"authHeaders": {
-						"Subscription-Key": {
-							"type": "SecureString",
-							"value": "**********"
-						}
-					}
+					"authenticationType": "Anonymous"
 				}
 			},
 			"dependsOn": []
