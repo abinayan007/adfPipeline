@@ -1,0 +1,12 @@
+{
+	"name": "OAGDirect",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OAGDirect",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"schema": []
+	}
+}
