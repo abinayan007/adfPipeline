@@ -1,0 +1,11 @@
+{
+	"name": "akv-service",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"type": "AzureKeyVault",
+		"annotations": [],
+		"typeProperties": {
+			"baseUrl": "https://flightaware-dev-key.vault.azure.net/"
+		}
+	}
+}

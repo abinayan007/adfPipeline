@@ -1,0 +1,19 @@
+{
+	"name": "AeroApiRestService",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://aeroapi.flightaware.com",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous",
+			"authHeaders": {
+				"x-apikey": {
+					"type": "SecureString",
+					"value": "**********"
+				}
+			}
+		}
+	}
+}

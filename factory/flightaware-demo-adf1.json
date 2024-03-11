@@ -1,0 +1,9 @@
+{
+	"name": "flightaware-demo-adf1",
+	"location": "southeastasia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "87987409-0d8f-4463-ae55-a4b0b7e21bab",
+		"tenantId": "948999ec-8b4d-44fd-990d-491b52cf93ae"
+	}
+}
