@@ -13,6 +13,10 @@
 			"ArrivalDateTime": {
 				"type": "string",
 				"defaultValue": "2024-03-24"
+			},
+			"version": {
+				"type": "string",
+				"defaultValue": "v2"
 			}
 		},
 		"annotations": [],
