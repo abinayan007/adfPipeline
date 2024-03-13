@@ -2,7 +2,7 @@
 	"name": "pandemicdata",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "blob-storage-service",
+			"referenceName": "snowflakestorage",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": "data1"
+				"container": "data"
 			}
 		},
 		"schema": {}
