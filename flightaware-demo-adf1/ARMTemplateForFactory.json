@@ -116,7 +116,8 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"DepartureDataTime": "2024-03-20",
-									"ArrivalDateTime": "2024-03-24"
+									"ArrivalDateTime": "2024-03-24",
+									"version": "v2"
 								}
 							}
 						],
@@ -294,7 +295,7 @@
 				"annotations": [],
 				"type": "RestResource",
 				"typeProperties": {
-					"relativeUrl": "/flight-instances/"
+					"relativeUrl": "/flight-instances"
 				},
 				"schema": []
 			},
