@@ -5,8 +5,8 @@
 		"annotations": [],
 		"type": "AzureBlobStorage",
 		"typeProperties": {
-			"sasUri": "https://flighawareblobstorage.blob.core.windows.net/snowflaketesting/",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDUwMkExNERELTg2QzEtNDVGOS05QzQ1LTlBMEU1MzExRDgwRV81NDY2YjgyMS05MWQ5LTQ2YzktOGI1YS1hM2UxZWE4YzU5NzEiDQp9"
+			"sasUri": "https://snowflaketesting.blob.core.windows.net/snowdata/",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDUwMkExNERELTg2QzEtNDVGOS05QzQ1LTlBMEU1MzExRDgwRV82MDYxMjJmYy0xMTJjLTRjOGMtODY1My0yYTFmZTNjZWExNTUiDQp9"
 		}
 	}
 }
