@@ -47,6 +47,9 @@
 		"ls_oag_snowflake_properties_typeProperties_database": {
 			"value": "OAG_SCHEDULES"
 		},
+		"snowflakestorage_sasUri": {
+			"value": ""
+		},
 		"containerUri": {
 			"value": ""
 		},

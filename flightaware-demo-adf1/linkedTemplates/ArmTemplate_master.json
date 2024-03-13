@@ -63,6 +63,10 @@
 			"type": "string",
 			"defaultValue": "OAG_SCHEDULES"
 		},
+		"snowflakestorage_sasUri": {
+			"type": "secureString",
+			"metadata": "Secure string for 'sasUri' of 'snowflakestorage'"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -129,12 +133,35 @@
 					"ls_oag_snowflake_properties_typeProperties_database": {
 						"value": "[parameters('ls_oag_snowflake_properties_typeProperties_database')]"
 					},
+					"snowflakestorage_sasUri": {
+						"value": "[parameters('snowflakestorage_sasUri')]"
+					},
 					"blob-storage-service_properties_typeProperties_connectionString_secretName": {
 						"value": "[parameters('blob-storage-service_properties_typeProperties_connectionString_secretName')]"
 					}
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "flightaware-demo-adf1_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'flightaware-demo-adf1_ArmTemplate_0')]"
+			]
 		}
 	]
 }

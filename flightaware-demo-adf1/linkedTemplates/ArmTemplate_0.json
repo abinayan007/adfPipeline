@@ -59,6 +59,10 @@
 			"type": "string",
 			"defaultValue": "OAG_SCHEDULES"
 		},
+		"snowflakestorage_sasUri": {
+			"type": "secureString",
+			"metadata": "Secure string for 'sasUri' of 'snowflakestorage'"
+		},
 		"blob-storage-service_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
 			"defaultValue": "blob-storage-key1"
@@ -215,6 +219,19 @@
 						"type": "SecureString",
 						"value": "[parameters('ls_oag_snowflake_password')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/snowflakestorage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"sasUri": "[parameters('snowflakestorage_sasUri')]"
 				}
 			},
 			"dependsOn": []
@@ -394,19 +411,309 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "Snowflake1",
+					"referenceName": "ls_oag_snowflake",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
 				"type": "SnowflakeV2Table",
-				"schema": [],
+				"schema": [
+					{
+						"name": "CARRIER",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "CARRIER_CD_ICAO",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "FLTNO",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "FLTSUFFX",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "DEPAPT",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "DEP_PORT_CD_ICAO",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "DEPTERM",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "DEPCITY",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "DEPCTRY",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "ARRAPT",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "ARR_PORT_CD_ICAO",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "ARRTERM",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "ARRCITY",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "ARRCTRY",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "DEPTIM",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "SCHEDULED_DEPARTURE_TIME_UTC",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "SCHEDULED_DEPARTURE_DATE_TIME_LOCAL",
+						"type": "TIMESTAMP_NTZ"
+					},
+					{
+						"name": "SCHEDULED_DEPARTURE_DATE_TIME_UTC",
+						"type": "TIMESTAMP_NTZ"
+					},
+					{
+						"name": "ARRTIM",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "SCHEDULED_ARRIVAL_TIME_UTC",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "SCHEDULED_ARRIVAL_DATE_TIME_LOCAL",
+						"type": "TIMESTAMP_NTZ"
+					},
+					{
+						"name": "SCHEDULED_ARRIVAL_DATE_TIME_UTC",
+						"type": "TIMESTAMP_NTZ"
+					},
+					{
+						"name": "ARRDAY",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "ELPTIM",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "FLIGHT_DATE",
+						"type": "DATE"
+					},
+					{
+						"name": "SCHEDULED_DEPARTURE_DATE_UTC",
+						"type": "DATE"
+					},
+					{
+						"name": "SCHEDULED_ARRIVAL_DATE_LOCAL",
+						"type": "DATE"
+					},
+					{
+						"name": "SCHEDULED_ARRIVAL_DATE_UTC",
+						"type": "DATE"
+					},
+					{
+						"name": "STOPS",
+						"type": "NUMBER",
+						"precision": 38,
+						"scale": 0
+					},
+					{
+						"name": "GENACFT",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "INPACFT",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "EQUIPMENT_CD_ICAO",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "ACFTCHANGE",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "SERVICE",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "PX",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "MEALS",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "FRTCLASS",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "TONS",
+						"type": "NUMBER",
+						"precision": 15,
+						"scale": 10
+					},
+					{
+						"name": "COMM10_50",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "OPERATING",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "GHOST",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "DUPCARFL",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "SAD",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "SAD_NAME",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "ACFT_OWNER",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "RESTRICT",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "DOMINT",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "ROUTING",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "LONGEST",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "INTAPT",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "DISTANCE",
+						"type": "NUMBER",
+						"precision": 38,
+						"scale": 0
+					},
+					{
+						"name": "GOVT_APP",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "INFLTSERVICE",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "SECUREFLT",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "FIRST_CLASS_SEATS",
+						"type": "NUMBER",
+						"precision": 38,
+						"scale": 0
+					},
+					{
+						"name": "BUSINESS_CLASS_SEATS",
+						"type": "NUMBER",
+						"precision": 38,
+						"scale": 0
+					},
+					{
+						"name": "PREMIUM_ECONOMY_CLASS_SEATS",
+						"type": "NUMBER",
+						"precision": 38,
+						"scale": 0
+					},
+					{
+						"name": "ECONOMY_PLUS_CLASS_SEATS",
+						"type": "NUMBER",
+						"precision": 38,
+						"scale": 0
+					},
+					{
+						"name": "ECONOMY_CLASS_SEATS",
+						"type": "NUMBER",
+						"precision": 38,
+						"scale": 0
+					},
+					{
+						"name": "TOTAL_SEATS",
+						"type": "NUMBER",
+						"precision": 38,
+						"scale": 0
+					},
+					{
+						"name": "OAG_SCHEDULE_FINGERPRINT",
+						"type": "VARCHAR"
+					},
+					{
+						"name": "FILE_DATE",
+						"type": "DATE"
+					}
+				],
 				"typeProperties": {
 					"schema": "DIRECT_CUSTOMER_CONFIGURATIONS",
 					"table": "NCS_SCHED"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Snowflake1')]"
+				"[concat(variables('factoryId'), '/linkedServices/ls_oag_snowflake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pandemicdata')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "snowflakestorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "data"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/snowflakestorage')]"
 			]
 		},
 		{
@@ -429,6 +736,34 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/akv-service')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "snowflakestorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "data"
+					},
+					"columnDelimiter": ",",
+					"rowDelimiter": "\r\n",
+					"escapeChar": "\\",
+					"firstRowAsHeader": false,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/snowflakestorage')]"
 			]
 		},
 		{
@@ -463,30 +798,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pandemicdata')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "blob-storage-service",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"container": "data1"
-					}
-				},
-				"schema": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/blob-storage-service')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OAG Direct flight info')]",
+			"name": "[concat(parameters('factoryName'), '/snowflake')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -505,38 +817,36 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "RestSource",
-								"httpRequestTimeout": "00:01:40",
-								"requestInterval": "00.00:00:00.010",
-								"requestMethod": "GET",
-								"additionalHeaders": {
-									"Cache-Control": "no-cache"
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"wildcardFolderPath": "new ",
+									"wildcardFileName": "*",
+									"enablePartitionDiscovery": false
 								},
-								"paginationRules": {
-									"supportRFC5988": "true"
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
 								}
 							},
 							"sink": {
-								"type": "JsonSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "JsonWriteSettings"
+								"type": "SnowflakeV2Sink",
+								"importSettings": {
+									"type": "SnowflakeImportCopyCommand"
 								}
 							},
 							"enableStaging": false
 						},
 						"inputs": [
 							{
-								"referenceName": "OAGDirect",
+								"referenceName": "DelimitedText1",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "OAGDirectSink",
+								"referenceName": "SnowflakeTable1",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -549,8 +859,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/OAGDirect')]",
-				"[concat(variables('factoryId'), '/datasets/OAGDirectSink')]"
+				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
+				"[concat(variables('factoryId'), '/datasets/SnowflakeTable1')]"
 			]
 		}
 	]
