@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SnowflakeV2Source",
+						"query": "select * from OAG_SCHEDULES.DIRECT_CUSTOMER_CONFIGURATIONS.NCS_SCHED limit 100",
 						"exportSettings": {
 							"type": "SnowflakeExportCopyCommand"
 						}
