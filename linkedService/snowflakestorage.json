@@ -5,7 +5,7 @@
 		"annotations": [],
 		"type": "AzureBlobStorage",
 		"typeProperties": {
-			"sasUri": "https://snowflaketesting.blob.core.windows.net/data"
+			"sasUri": "https://snowflaketesting.blob.core.windows.net/"
 		}
 	}
 }
