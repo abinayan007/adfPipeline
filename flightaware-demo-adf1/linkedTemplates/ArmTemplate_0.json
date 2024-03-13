@@ -551,7 +551,6 @@
 						"typeProperties": {
 							"source": {
 								"type": "SnowflakeV2Source",
-								"query": "select * from NCS_SCHED limit 100",
 								"exportSettings": {
 									"type": "SnowflakeExportCopyCommand"
 								}
