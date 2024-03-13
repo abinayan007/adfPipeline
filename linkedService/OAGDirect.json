@@ -2,6 +2,16 @@
 	"name": "OAGDirect",
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
+		"parameters": {
+			"version": {
+				"type": "string",
+				"defaultValue": "v2"
+			},
+			"DepartureDateTime": {
+				"type": "string",
+				"defaultValue": "2024-03-20"
+			}
+		},
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
