@@ -130,16 +130,6 @@
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"parameters": {
-					"version": {
-						"type": "string",
-						"defaultValue": "v2"
-					},
-					"DepartureDateTime": {
-						"type": "string",
-						"defaultValue": "2024-03-20"
-					}
-				},
 				"annotations": [],
 				"type": "RestService",
 				"typeProperties": {
@@ -365,16 +355,12 @@
 			"properties": {
 				"linkedServiceName": {
 					"referenceName": "OAGDirect",
-					"type": "LinkedServiceReference",
-					"parameters": {
-						"version": "v2",
-						"DepartureDateTime": "2024-03-20"
-					}
+					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
 				"type": "RestResource",
 				"typeProperties": {
-					"relativeUrl": "/flight-instances/"
+					"relativeUrl": "/flight-instances/?version=v2&DepartureDateTime=2024-03-20"
 				},
 				"schema": []
 			},
