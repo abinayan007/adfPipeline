@@ -37,7 +37,7 @@
 		},
 		"OAGDirect_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://api.oag.com/flight-instances/"
+			"defaultValue": "https://api.oag.com/flight-instances"
 		},
 		"akv-service_properties_typeProperties_baseUrl": {
 			"type": "string",
@@ -106,7 +106,10 @@
 							{
 								"referenceName": "OAGDirect",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"DepartureDataTime": "2024-03-20",
+									"ArrivalDateTime": "2024-03-24"
+								}
 							}
 						],
 						"outputs": [
@@ -426,7 +429,13 @@
 				"typeProperties": {
 					"url": "[parameters('OAGDirect_properties_typeProperties_url')]",
 					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous"
+					"authenticationType": "Anonymous",
+					"authHeaders": {
+						"Subscription-Key": {
+							"type": "SecureString",
+							"value": "**********"
+						}
+					}
 				}
 			},
 			"dependsOn": []
