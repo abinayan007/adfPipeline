@@ -5,20 +5,6 @@
 			"referenceName": "OAGDirect",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"DepartureDataTime": {
-				"type": "string",
-				"defaultValue": "2024-03-20"
-			},
-			"ArrivalDateTime": {
-				"type": "string",
-				"defaultValue": "2024-03-24"
-			},
-			"version": {
-				"type": "string",
-				"defaultValue": "v2"
-			}
-		},
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
