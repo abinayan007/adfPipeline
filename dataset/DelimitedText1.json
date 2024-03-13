@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": "newdata"
+				"container": "snowflaketesting"
 			},
 			"columnDelimiter": ",",
 			"rowDelimiter": "\r\n",
