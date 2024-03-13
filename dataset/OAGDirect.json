@@ -3,16 +3,12 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "OAGDirect",
-			"type": "LinkedServiceReference",
-			"parameters": {
-				"version": "v2",
-				"DepartureDateTime": "2024-03-20"
-			}
+			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "/flight-instances/"
+			"relativeUrl": "/flight-instances/?version=v2&DepartureDateTime=2024-03-20"
 		},
 		"schema": []
 	}
