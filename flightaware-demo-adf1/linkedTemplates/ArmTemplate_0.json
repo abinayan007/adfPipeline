@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'functionKey' of 'Flight_Aware_Firehose'"
 		},
+		"Snowflake1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Snowflake1'"
+		},
 		"flightAware_functionKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'functionKey' of 'flightAware'"
@@ -38,6 +42,10 @@
 		"OAGDirect_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://api.oag.com/flight-instances"
+		},
+		"Snowflake1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "OAG_SCHEDULES"
 		},
 		"akv-service_properties_typeProperties_baseUrl": {
 			"type": "string",
@@ -133,6 +141,27 @@
 							"type": "SecureString",
 							"value": "**********"
 						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Snowflake1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SnowflakeV2",
+				"typeProperties": {
+					"authenticationType": "Basic",
+					"accountIdentifier": "https://ft63031.ap-southeast-1.snowflakecomputing.com/",
+					"user": "g.ramadoss@ncs.co",
+					"database": "[parameters('Snowflake1_properties_typeProperties_database')]",
+					"warehouse": "DIRECT_CUSTOMER_CONFIGURATIONS",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('Snowflake1_password')]"
 					}
 				}
 			},
@@ -336,6 +365,10 @@
 					"ArrivalDateTime": {
 						"type": "string",
 						"defaultValue": "2024-03-24"
+					},
+					"version": {
+						"type": "string",
+						"defaultValue": "v2"
 					}
 				},
 				"annotations": [],
@@ -365,6 +398,27 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AeroApiRestService')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SnowflakeTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Snowflake1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SnowflakeV2Table",
+				"schema": [],
+				"typeProperties": {
+					"schema": "DIRECT_CUSTOMER_CONFIGURATIONS",
+					"table": "NCS_SCHED"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Snowflake1')]"
 			]
 		},
 		{

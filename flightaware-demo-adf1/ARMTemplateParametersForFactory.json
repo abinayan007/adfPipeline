@@ -11,6 +11,9 @@
 		"Flight_Aware_Firehose_functionKey": {
 			"value": ""
 		},
+		"Snowflake1_password": {
+			"value": ""
+		},
 		"flightAware_functionKey": {
 			"value": ""
 		},
@@ -28,6 +31,9 @@
 		},
 		"OAGDirect_properties_typeProperties_url": {
 			"value": "https://api.oag.com/flight-instances"
+		},
+		"Snowflake1_properties_typeProperties_database": {
+			"value": "OAG_SCHEDULES"
 		},
 		"akv-service_properties_typeProperties_baseUrl": {
 			"value": "https://flightaware-dev-key.vault.azure.net/"

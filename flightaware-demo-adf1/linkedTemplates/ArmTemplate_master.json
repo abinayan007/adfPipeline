@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'functionKey' of 'Flight_Aware_Firehose'"
 		},
+		"Snowflake1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Snowflake1'"
+		},
 		"flightAware_functionKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'functionKey' of 'flightAware'"
@@ -38,6 +42,10 @@
 		"OAGDirect_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://api.oag.com/flight-instances"
+		},
+		"Snowflake1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "OAG_SCHEDULES"
 		},
 		"akv-service_properties_typeProperties_baseUrl": {
 			"type": "string",
@@ -88,6 +96,9 @@
 					"Flight_Aware_Firehose_functionKey": {
 						"value": "[parameters('Flight_Aware_Firehose_functionKey')]"
 					},
+					"Snowflake1_password": {
+						"value": "[parameters('Snowflake1_password')]"
+					},
 					"flightAware_functionKey": {
 						"value": "[parameters('flightAware_functionKey')]"
 					},
@@ -105,6 +116,9 @@
 					},
 					"OAGDirect_properties_typeProperties_url": {
 						"value": "[parameters('OAGDirect_properties_typeProperties_url')]"
+					},
+					"Snowflake1_properties_typeProperties_database": {
+						"value": "[parameters('Snowflake1_properties_typeProperties_database')]"
 					},
 					"akv-service_properties_typeProperties_baseUrl": {
 						"value": "[parameters('akv-service_properties_typeProperties_baseUrl')]"
