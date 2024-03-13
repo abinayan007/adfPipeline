@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
-			"url": "https://api.oag.com/flight-instances/",
+			"url": "https://api.oag.com",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		}
