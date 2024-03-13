@@ -450,7 +450,7 @@
 							"type": "Expression"
 						},
 						"folderPath": {
-							"value": "@concat('output_', formatDateTime(utcnow(), 'yyyyMMddHHmmss'))",
+							"value": "@concat('output_', formatDateTime(utcnow(), 'yyyyMMdd'))",
 							"type": "Expression"
 						},
 						"container": "oag-direct"
