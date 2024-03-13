@@ -488,7 +488,7 @@
 						"container": "snowflaketesting"
 					},
 					"columnDelimiter": ",",
-					"rowDelimiter": "\r\n",
+					"rowDelimiter": "\n",
 					"escapeChar": "\\",
 					"firstRowAsHeader": false,
 					"quoteChar": "\""
