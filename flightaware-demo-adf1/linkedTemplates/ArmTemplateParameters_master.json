@@ -30,7 +30,7 @@
 			"value": "https://flight-aware-test.azurewebsites.net"
 		},
 		"OAGDirect_properties_typeProperties_url": {
-			"value": "https://api.oag.com/flight-instances"
+			"value": "https://api.oag.com/flight-instances/"
 		},
 		"Snowflake1_properties_typeProperties_database": {
 			"value": "OAG_SCHEDULES"
