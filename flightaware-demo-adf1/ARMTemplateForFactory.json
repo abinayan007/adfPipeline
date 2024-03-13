@@ -295,7 +295,7 @@
 				"annotations": [],
 				"type": "RestResource",
 				"typeProperties": {
-					"relativeUrl": "/flight-instances"
+					"relativeUrl": "/flight-instances/?version=v2&DepartureDateTime=2024-03-20"
 				},
 				"schema": []
 			},
@@ -465,7 +465,13 @@
 				"typeProperties": {
 					"url": "[parameters('OAGDirect_properties_typeProperties_url')]",
 					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous"
+					"authenticationType": "Anonymous",
+					"authHeaders": {
+						"Subscription-Key": {
+							"type": "SecureString",
+							"value": "**********"
+						}
+					}
 				}
 			},
 			"dependsOn": []
