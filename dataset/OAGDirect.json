@@ -21,6 +21,9 @@
 		},
 		"annotations": [],
 		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "/flight-instances/"
+		},
 		"schema": []
 	}
 }
