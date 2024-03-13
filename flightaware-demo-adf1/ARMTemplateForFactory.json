@@ -648,7 +648,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"container": "snowflaketesting"
+						"container": "snowdata"
 					},
 					"columnDelimiter": ",",
 					"rowDelimiter": "\n",
