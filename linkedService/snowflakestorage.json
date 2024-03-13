@@ -1,0 +1,11 @@
+{
+	"name": "snowflakestorage",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"sasUri": "https://snowflaketesting.blob.core.windows.net/data?sp=r&st=2024-03-13T06:11:29Z&se=2024-03-13T14:11:29Z&spr=https&sv=2022-11-02&sr=c&sig=YdpxzLWiFOjNF0Ua3g%2BrG%2BbsiqVgGj83%2FRgJmvUowwo%3D?sp=r&st=2024-03-13T06:11:29Z&se=2024-03-13T14:11:29Z&spr=https&sv=2022-11-02&sr=c&sig=YdpxzLWiFOjNF0Ua3g%2BrG%2BbsiqVgGj83%2FRgJmvUowwo%3D"
+		}
+	}
+}
