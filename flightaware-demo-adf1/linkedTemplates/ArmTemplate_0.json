@@ -485,7 +485,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"container": "data"
+						"container": "newdata"
 					},
 					"columnDelimiter": ",",
 					"rowDelimiter": "\r\n",
