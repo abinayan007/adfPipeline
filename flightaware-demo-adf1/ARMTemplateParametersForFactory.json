@@ -17,9 +17,6 @@
 		"flightAware_functionKey": {
 			"value": ""
 		},
-		"ls_oag_snowflake_password": {
-			"value": ""
-		},
 		"AeroApiRestService_properties_typeProperties_url": {
 			"value": "https://aeroapi.flightaware.com"
 		},

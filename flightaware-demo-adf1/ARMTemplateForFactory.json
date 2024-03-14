@@ -23,10 +23,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'functionKey' of 'flightAware'"
 		},
-		"ls_oag_snowflake_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'ls_oag_snowflake'"
-		},
 		"AeroApiRestService_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://aeroapi.flightaware.com"
@@ -550,12 +546,18 @@
 					"database": "[parameters('ls_oag_snowflake_properties_typeProperties_database')]",
 					"warehouse": "GENERAL",
 					"password": {
-						"type": "SecureString",
-						"value": "[parameters('ls_oag_snowflake_password')]"
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "akv-service",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "snowPassword"
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/akv-service')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/OAGSnowflakePipeline')]",

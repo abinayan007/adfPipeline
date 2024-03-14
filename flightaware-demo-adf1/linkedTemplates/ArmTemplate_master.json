@@ -23,10 +23,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'functionKey' of 'flightAware'"
 		},
-		"ls_oag_snowflake_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'ls_oag_snowflake'"
-		},
 		"AeroApiRestService_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://aeroapi.flightaware.com"
@@ -106,9 +102,6 @@
 					"flightAware_functionKey": {
 						"value": "[parameters('flightAware_functionKey')]"
 					},
-					"ls_oag_snowflake_password": {
-						"value": "[parameters('ls_oag_snowflake_password')]"
-					},
 					"AeroApiRestService_properties_typeProperties_url": {
 						"value": "[parameters('AeroApiRestService_properties_typeProperties_url')]"
 					},
@@ -130,14 +123,14 @@
 					"flightAware_properties_typeProperties_functionAppUrl": {
 						"value": "[parameters('flightAware_properties_typeProperties_functionAppUrl')]"
 					},
-					"ls_oag_snowflake_properties_typeProperties_database": {
-						"value": "[parameters('ls_oag_snowflake_properties_typeProperties_database')]"
-					},
 					"snowflakestorage_sasUri": {
 						"value": "[parameters('snowflakestorage_sasUri')]"
 					},
 					"blob-storage-service_properties_typeProperties_connectionString_secretName": {
 						"value": "[parameters('blob-storage-service_properties_typeProperties_connectionString_secretName')]"
+					},
+					"ls_oag_snowflake_properties_typeProperties_database": {
+						"value": "[parameters('ls_oag_snowflake_properties_typeProperties_database')]"
 					}
 				}
 			},
