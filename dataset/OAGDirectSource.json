@@ -1,5 +1,5 @@
 {
-	"name": "OAGDirect",
+	"name": "OAGDirectSource",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "OAGDirect",
