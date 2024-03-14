@@ -6,7 +6,7 @@
 		"typeProperties": {
 			"authenticationType": "Basic",
 			"accountIdentifier": "ft63031.ap-southeast-1",
-			"user": "@linkedService('akv-service').secrets.snowUsername",
+			"user": "g.ramadoss@ncs.co",
 			"database": "OAG_SCHEDULES",
 			"warehouse": "GENERAL",
 			"password": {
