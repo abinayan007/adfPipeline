@@ -661,6 +661,34 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/snowflakestorage')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "snowflakestorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "snowdata"
+					},
+					"columnDelimiter": ",",
+					"rowDelimiter": "' '",
+					"escapeChar": "\\\\",
+					"firstRowAsHeader": false,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/snowflakestorage')]"
+			]
 		}
 	]
 }
