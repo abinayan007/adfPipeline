@@ -237,7 +237,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/livePipeline')]",
+			"name": "[concat(parameters('factoryName'), '/FirehoseLivePipeline')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -323,7 +323,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pitrPipeline')]",
+			"name": "[concat(parameters('factoryName'), '/FirehosePitrPipeline')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -366,7 +366,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/OAGDirect')]",
+			"name": "[concat(parameters('factoryName'), '/OAGDirectSource')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -406,7 +406,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SnowflakeTable1')]",
+			"name": "[concat(parameters('factoryName'), '/SnowflakeSource')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -472,7 +472,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"name": "[concat(parameters('factoryName'), '/SnowflakeSink')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {

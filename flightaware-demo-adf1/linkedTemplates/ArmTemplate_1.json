@@ -13,7 +13,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/snowflake')]",
+			"name": "[concat(parameters('factoryName'), '/OAGSnowflakePipeline')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -52,14 +52,14 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "SnowflakeTable1",
+								"referenceName": "SnowflakeSource",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "DelimitedText1",
+								"referenceName": "SnowflakeSink",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -74,7 +74,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/OAG Direct flight info')]",
+			"name": "[concat(parameters('factoryName'), '/OAGDirectFlightInfoPipeline')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -117,7 +117,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "OAGDirect",
+								"referenceName": "OAGDirectSource",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
