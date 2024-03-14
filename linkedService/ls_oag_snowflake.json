@@ -1,16 +1,23 @@
 {
 	"name": "ls_oag_snowflake",
-	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "SnowflakeV2",
 		"typeProperties": {
 			"authenticationType": "Basic",
 			"accountIdentifier": "ft63031.ap-southeast-1",
-			"user": "g.ramadoss@ncs.co",
+			"user": "@linkedService('akv-service').secrets.snowUsername",
 			"database": "OAG_SCHEDULES",
 			"warehouse": "GENERAL",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDUwMkExNERELTg2QzEtNDVGOS05QzQ1LTlBMEU1MzExRDgwRV9mYzUzY2UzMS1lZGI4LTQzOTAtOWUxOS1iYWNhNjBiYWZlNDgiDQp9"
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "akv-service",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "snowPassword"
+			}
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
 }
