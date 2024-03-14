@@ -706,6 +706,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"folderPath": "FlightStatus/@concat('output_', formatDateTime(utcnow(), 'yyyyMMddHHmmss'))",
 						"container": "aeroapi"
 					}
 				},
