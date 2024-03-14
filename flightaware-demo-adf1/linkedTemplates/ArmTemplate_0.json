@@ -488,7 +488,7 @@
 						"container": "snowdata"
 					},
 					"columnDelimiter": ",",
-					"rowDelimiter": "\n",
+					"rowDelimiter": "\r\n",
 					"escapeChar": "\\",
 					"firstRowAsHeader": false,
 					"quoteChar": "\""
