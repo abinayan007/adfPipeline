@@ -513,6 +513,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"folderPath": "@concat('output_', formatDateTime(utcnow(), 'yyyyMMddHHmmss'))",
 						"container": "snowdata"
 					},
 					"columnDelimiter": ",",
