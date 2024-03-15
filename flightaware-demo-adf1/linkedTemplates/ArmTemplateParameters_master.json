@@ -8,6 +8,9 @@
 		"AzureFunction1_functionKey": {
 			"value": ""
 		},
+		"AzureFunctionTest_functionKey": {
+			"value": ""
+		},
 		"Flight_Aware_Firehose_functionKey": {
 			"value": ""
 		},
@@ -17,14 +20,14 @@
 		"flightAware_functionKey": {
 			"value": ""
 		},
-		"AzureFunctionTest_functionKey": {
-			"value": ""
-		},
 		"AeroApiRestService_properties_typeProperties_url": {
 			"value": "https://aeroapi.flightaware.com"
 		},
 		"AzureFunction1_properties_typeProperties_functionAppUrl": {
 			"value": "https://flightawaretest.azurewebsites.net"
+		},
+		"AzureFunctionTest_properties_typeProperties_functionAppUrl": {
+			"value": "https://azuretesting1234.azurewebsites.net"
 		},
 		"Flight_Aware_Firehose_properties_typeProperties_functionAppUrl": {
 			"value": "https://flight-aware-test.azurewebsites.net"
@@ -49,9 +52,6 @@
 		},
 		"snowflakestorage_sasUri": {
 			"value": ""
-		},
-		"AzureFunctionTest_properties_typeProperties_functionAppUrl": {
-			"value": "https://azuretesting1234.azurewebsites.net"
 		},
 		"containerUri": {
 			"value": ""
