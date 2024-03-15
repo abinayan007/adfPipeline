@@ -17,6 +17,9 @@
 		"flightAware_functionKey": {
 			"value": ""
 		},
+		"AzureFunctionTest_functionKey": {
+			"value": ""
+		},
 		"AeroApiRestService_properties_typeProperties_url": {
 			"value": "https://aeroapi.flightaware.com"
 		},
@@ -46,6 +49,9 @@
 		},
 		"snowflakestorage_sasUri": {
 			"value": ""
+		},
+		"AzureFunctionTest_properties_typeProperties_functionAppUrl": {
+			"value": "https://azuretesting1234.azurewebsites.net"
 		}
 	}
 }

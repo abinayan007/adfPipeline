@@ -23,6 +23,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'functionKey' of 'flightAware'"
 		},
+		"AzureFunctionTest_functionKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'functionKey' of 'AzureFunctionTest'"
+		},
 		"AeroApiRestService_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://aeroapi.flightaware.com"
@@ -54,6 +58,10 @@
 		"snowflakestorage_sasUri": {
 			"type": "secureString",
 			"metadata": "Secure string for 'sasUri' of 'snowflakestorage'"
+		},
+		"AzureFunctionTest_properties_typeProperties_functionAppUrl": {
+			"type": "string",
+			"defaultValue": "https://azuretesting1234.azurewebsites.net"
 		},
 		"blob-storage-service_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
@@ -212,6 +220,24 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureFunctionTest')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureFunction",
+				"typeProperties": {
+					"functionAppUrl": "[parameters('AzureFunctionTest_properties_typeProperties_functionAppUrl')]",
+					"functionKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureFunctionTest_functionKey')]"
+					},
+					"authentication": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/FirehoseLivePipeline')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -282,7 +308,7 @@
 							}
 						},
 						"linkedServiceName": {
-							"referenceName": "flightAware",
+							"referenceName": "AzureFunctionTest",
 							"type": "LinkedServiceReference"
 						}
 					}
@@ -294,7 +320,7 @@
 				"lastPublishTime": "2024-03-08T06:06:10Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/flightAware')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureFunctionTest')]"
 			]
 		},
 		{
@@ -539,27 +565,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/blob-storage-service')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SnowflakeSource')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_oag_snowflake",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SnowflakeV2Table",
-				"schema": [],
-				"typeProperties": {
-					"schema": "DIRECT_CUSTOMER_CONFIGURATIONS",
-					"table": "NCS_SCHED"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_oag_snowflake')]"
 			]
 		}
 	]

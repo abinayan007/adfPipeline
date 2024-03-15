@@ -23,6 +23,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'functionKey' of 'flightAware'"
 		},
+		"AzureFunctionTest_functionKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'functionKey' of 'AzureFunctionTest'"
+		},
 		"AeroApiRestService_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://aeroapi.flightaware.com"
@@ -63,6 +67,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'sasUri' of 'snowflakestorage'"
 		},
+		"AzureFunctionTest_properties_typeProperties_functionAppUrl": {
+			"type": "string",
+			"defaultValue": "https://azuretesting1234.azurewebsites.net"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -102,6 +110,9 @@
 					"flightAware_functionKey": {
 						"value": "[parameters('flightAware_functionKey')]"
 					},
+					"AzureFunctionTest_functionKey": {
+						"value": "[parameters('AzureFunctionTest_functionKey')]"
+					},
 					"AeroApiRestService_properties_typeProperties_url": {
 						"value": "[parameters('AeroApiRestService_properties_typeProperties_url')]"
 					},
@@ -125,6 +136,9 @@
 					},
 					"snowflakestorage_sasUri": {
 						"value": "[parameters('snowflakestorage_sasUri')]"
+					},
+					"AzureFunctionTest_properties_typeProperties_functionAppUrl": {
+						"value": "[parameters('AzureFunctionTest_properties_typeProperties_functionAppUrl')]"
 					},
 					"blob-storage-service_properties_typeProperties_connectionString_secretName": {
 						"value": "[parameters('blob-storage-service_properties_typeProperties_connectionString_secretName')]"
