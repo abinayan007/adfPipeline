@@ -207,7 +207,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"functionName": "http_trigger",
-							"method": "POST",
+							"method": "GET",
 							"headers": {},
 							"body": {
 								"precommand": "",
