@@ -23,7 +23,7 @@
 					}
 				},
 				"linkedServiceName": {
-					"referenceName": "flightAware",
+					"referenceName": "AzureFunctionTest",
 					"type": "LinkedServiceReference"
 				}
 			}
