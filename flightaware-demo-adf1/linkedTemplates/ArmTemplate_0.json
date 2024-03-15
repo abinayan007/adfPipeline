@@ -299,11 +299,11 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"functionName": "MyHttpTrigger",
-							"method": "GET",
+							"functionName": "http_trigger",
+							"method": "POST",
 							"headers": {},
 							"body": {
-								"precommand": "",
+								"precommand": "live",
 								"post command": ""
 							}
 						},
