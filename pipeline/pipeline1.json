@@ -18,8 +18,8 @@
 					"functionName": "http_trigger",
 					"method": "POST",
 					"body": {
-						"precommand": "live",
-						"post command": ""
+						"precom": "live",
+						"postcom": ""
 					}
 				},
 				"linkedServiceName": {
