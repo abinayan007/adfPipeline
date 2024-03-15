@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"functionName": "MyHttpTrigger",
+					"functionName": "http_trigger",
 					"method": "GET",
 					"body": {
 						"precommand": "",
