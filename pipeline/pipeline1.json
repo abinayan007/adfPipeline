@@ -16,9 +16,9 @@
 				"userProperties": [],
 				"typeProperties": {
 					"functionName": "http_trigger",
-					"method": "GET",
+					"method": "POST",
 					"body": {
-						"precommand": "",
+						"precommand": "live",
 						"post command": ""
 					}
 				},
