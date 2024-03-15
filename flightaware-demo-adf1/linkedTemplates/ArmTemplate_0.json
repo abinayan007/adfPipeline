@@ -299,7 +299,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"functionName": "http_trigger",
+							"functionName": "MyHttpTrigger",
 							"method": "GET",
 							"headers": {},
 							"body": {
