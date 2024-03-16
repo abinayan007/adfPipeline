@@ -41,8 +41,8 @@
 		"akv-service_properties_typeProperties_baseUrl": {
 			"value": "https://flightaware-dev-key.vault.azure.net/"
 		},
-		"blob-storage-service_properties_typeProperties_connectionString_secretName": {
-			"value": "blob-storage-key1"
+		"blob-storage-service_sasUri": {
+			"value": ""
 		},
 		"flightAware_properties_typeProperties_functionAppUrl": {
 			"value": "https://flight-aware.azurewebsites.net"

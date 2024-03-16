@@ -6,6 +6,10 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "flightaware-demo-adf1"
+		},
+		"ls_oag_snowflake_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "OAG_SCHEDULES"
 		}
 	},
 	"variables": {
@@ -13,49 +17,26 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/OAGDirectSink')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
+			"name": "[concat(parameters('factoryName'), '/ls_oag_snowflake')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"linkedServiceName": {
-					"referenceName": "blob-storage-service",
-					"type": "LinkedServiceReference"
-				},
 				"annotations": [],
-				"type": "Json",
+				"type": "SnowflakeV2",
 				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@concat('output_', formatDateTime(utcnow(), 'yyyyMMddHHmmss'), '.json')",
-							"type": "Expression"
+					"authenticationType": "Basic",
+					"accountIdentifier": "ft63031.ap-southeast-1",
+					"user": "g.ramadoss@ncs.co",
+					"database": "[parameters('ls_oag_snowflake_properties_typeProperties_database')]",
+					"warehouse": "GENERAL",
+					"password": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "akv-service",
+							"type": "LinkedServiceReference"
 						},
-						"folderPath": {
-							"value": "@concat('FlightInfo/oaginfo/', formatDateTime(utcnow(), 'yyyyMMdd'))",
-							"type": "Expression"
-						},
-						"container": "ingesteddata"
+						"secretName": "snowPassword"
 					}
-				},
-				"schema": {}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SnowflakeSource')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_oag_snowflake",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SnowflakeV2Table",
-				"schema": [],
-				"typeProperties": {
-					"schema": "DIRECT_CUSTOMER_CONFIGURATIONS",
-					"table": "NCS_SCHED"
 				}
 			},
 			"dependsOn": []
@@ -185,8 +166,27 @@
 				},
 				"annotations": []
 			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SnowflakeSource')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_oag_snowflake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SnowflakeV2Table",
+				"schema": [],
+				"typeProperties": {
+					"schema": "DIRECT_CUSTOMER_CONFIGURATIONS",
+					"table": "NCS_SCHED"
+				}
+			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/OAGDirectSink')]"
+				"[concat(variables('factoryId'), '/linkedServices/ls_oag_snowflake')]"
 			]
 		},
 		{

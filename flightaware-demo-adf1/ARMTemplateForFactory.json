@@ -55,9 +55,9 @@
 			"type": "string",
 			"defaultValue": "https://flightaware-dev-key.vault.azure.net/"
 		},
-		"blob-storage-service_properties_typeProperties_connectionString_secretName": {
-			"type": "string",
-			"defaultValue": "blob-storage-key1"
+		"blob-storage-service_sasUri": {
+			"type": "secureString",
+			"metadata": "Secure string for 'sasUri' of 'blob-storage-service'"
 		},
 		"flightAware_properties_typeProperties_functionAppUrl": {
 			"type": "string",
@@ -538,7 +538,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "snowflakestorage",
+					"referenceName": "blob-storage-service",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -561,7 +561,7 @@
 				"schema": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/snowflakestorage')]"
+				"[concat(variables('factoryId'), '/linkedServices/blob-storage-service')]"
 			]
 		},
 		{
@@ -746,19 +746,10 @@
 				"annotations": [],
 				"type": "AzureBlobStorage",
 				"typeProperties": {
-					"connectionString": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "akv-service",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "[parameters('blob-storage-service_properties_typeProperties_connectionString_secretName')]"
-					}
+					"sasUri": "[parameters('blob-storage-service_sasUri')]"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/akv-service')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/flightAware')]",

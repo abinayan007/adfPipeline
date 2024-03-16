@@ -55,9 +55,9 @@
 			"type": "string",
 			"defaultValue": "https://flightaware-dev-key.vault.azure.net/"
 		},
-		"blob-storage-service_properties_typeProperties_connectionString_secretName": {
-			"type": "string",
-			"defaultValue": "blob-storage-key1"
+		"blob-storage-service_sasUri": {
+			"type": "secureString",
+			"metadata": "Secure string for 'sasUri' of 'blob-storage-service'"
 		},
 		"flightAware_properties_typeProperties_functionAppUrl": {
 			"type": "string",
@@ -134,17 +134,14 @@
 					"akv-service_properties_typeProperties_baseUrl": {
 						"value": "[parameters('akv-service_properties_typeProperties_baseUrl')]"
 					},
+					"blob-storage-service_sasUri": {
+						"value": "[parameters('blob-storage-service_sasUri')]"
+					},
 					"flightAware_properties_typeProperties_functionAppUrl": {
 						"value": "[parameters('flightAware_properties_typeProperties_functionAppUrl')]"
 					},
 					"snowflakestorage_sasUri": {
 						"value": "[parameters('snowflakestorage_sasUri')]"
-					},
-					"blob-storage-service_properties_typeProperties_connectionString_secretName": {
-						"value": "[parameters('blob-storage-service_properties_typeProperties_connectionString_secretName')]"
-					},
-					"ls_oag_snowflake_properties_typeProperties_database": {
-						"value": "[parameters('ls_oag_snowflake_properties_typeProperties_database')]"
 					}
 				}
 			},
@@ -163,6 +160,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"ls_oag_snowflake_properties_typeProperties_database": {
+						"value": "[parameters('ls_oag_snowflake_properties_typeProperties_database')]"
 					}
 				}
 			},

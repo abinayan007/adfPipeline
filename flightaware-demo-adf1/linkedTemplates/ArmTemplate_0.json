@@ -55,6 +55,10 @@
 			"type": "string",
 			"defaultValue": "https://flightaware-dev-key.vault.azure.net/"
 		},
+		"blob-storage-service_sasUri": {
+			"type": "secureString",
+			"metadata": "Secure string for 'sasUri' of 'blob-storage-service'"
+		},
 		"flightAware_properties_typeProperties_functionAppUrl": {
 			"type": "string",
 			"defaultValue": "https://flight-aware.azurewebsites.net"
@@ -62,14 +66,6 @@
 		"snowflakestorage_sasUri": {
 			"type": "secureString",
 			"metadata": "Secure string for 'sasUri' of 'snowflakestorage'"
-		},
-		"blob-storage-service_properties_typeProperties_connectionString_secretName": {
-			"type": "string",
-			"defaultValue": "blob-storage-key1"
-		},
-		"ls_oag_snowflake_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "OAG_SCHEDULES"
 		}
 	},
 	"variables": {
@@ -202,6 +198,19 @@
 				"type": "AzureKeyVault",
 				"typeProperties": {
 					"baseUrl": "[parameters('akv-service_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/blob-storage-service')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"sasUri": "[parameters('blob-storage-service_sasUri')]"
 				}
 			},
 			"dependsOn": []
@@ -367,6 +376,33 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AeroApiSink')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob-storage-service",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": {
+							"value": "@concat('FlightStatus/aerostatus/', formatDateTime(utcnow(), 'yyyyMMdd'))",
+							"type": "Expression"
+						},
+						"container": "ingesteddata"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/blob-storage-service')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AeroApiSource')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -419,6 +455,37 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/OAGDirectSink')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob-storage-service",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@concat('output_', formatDateTime(utcnow(), 'yyyyMMddHHmmss'), '.json')",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@concat('FlightInfo/oaginfo/', formatDateTime(utcnow(), 'yyyyMMdd'))",
+							"type": "Expression"
+						},
+						"container": "ingesteddata"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/blob-storage-service')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/OAGDirectSource')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -444,7 +511,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "snowflakestorage",
+					"referenceName": "blob-storage-service",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -467,7 +534,7 @@
 				"schema": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/snowflakestorage')]"
+				"[concat(variables('factoryId'), '/linkedServices/blob-storage-service')]"
 			]
 		},
 		{
@@ -491,82 +558,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/snowflakestorage')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/blob-storage-service')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "akv-service",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "[parameters('blob-storage-service_properties_typeProperties_connectionString_secretName')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/akv-service')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ls_oag_snowflake')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SnowflakeV2",
-				"typeProperties": {
-					"authenticationType": "Basic",
-					"accountIdentifier": "ft63031.ap-southeast-1",
-					"user": "g.ramadoss@ncs.co",
-					"database": "[parameters('ls_oag_snowflake_properties_typeProperties_database')]",
-					"warehouse": "GENERAL",
-					"password": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "akv-service",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "snowPassword"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/akv-service')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AeroApiSink')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "blob-storage-service",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": {
-							"value": "@concat('FlightStatus/aerostatus/', formatDateTime(utcnow(), 'yyyyMMdd'))",
-							"type": "Expression"
-						},
-						"container": "ingesteddata"
-					}
-				},
-				"schema": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/blob-storage-service')]"
 			]
 		}
 	]
