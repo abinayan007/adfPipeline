@@ -15,10 +15,10 @@
 					"type": "Expression"
 				},
 				"folderPath": {
-					"value": "@concat('output_', formatDateTime(utcnow(), 'yyyyMMddHHmmss'))",
+					"value": "@concat('FlightInfo/oaginfo/', formatDateTime(utcnow(), 'yyyyMMdd'))",
 					"type": "Expression"
 				},
-				"container": "oag-direct"
+				"container": "ingesteddata"
 			}
 		},
 		"schema": {}

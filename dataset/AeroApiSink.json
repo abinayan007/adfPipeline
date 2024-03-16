@@ -11,10 +11,10 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"folderPath": {
-					"value": "@concat('FlightStatus/', formatDateTime(utcnow(), 'yyyyMMddHHmmss'))",
+					"value": "@concat('FlightStatus/aerostatus/', formatDateTime(utcnow(), 'yyyyMMdd'))",
 					"type": "Expression"
 				},
-				"container": "aeroapi"
+				"container": "ingesteddata"
 			}
 		},
 		"schema": {}

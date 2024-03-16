@@ -10,8 +10,11 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "@concat('output_', formatDateTime(utcnow(), 'yyyyMMddHHmmss'))",
-				"container": "snowdata"
+				"folderPath": {
+					"value": "@concat('FlightStatus/oagstatus', formatDateTime(utcnow(), 'yyyyMMdd'))",
+					"type": "Expression"
+				},
+				"container": "ingesteddata"
 			},
 			"columnDelimiter": ",",
 			"rowDelimiter": "\r\n",
