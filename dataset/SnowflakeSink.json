@@ -2,7 +2,7 @@
 	"name": "SnowflakeSink",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "snowflakestorage",
+			"referenceName": "blob-storage-service",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
