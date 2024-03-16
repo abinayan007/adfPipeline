@@ -547,7 +547,7 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"folderPath": {
-							"value": "@concat('FlightStatus/oagstatus', formatDateTime(utcnow(), 'yyyyMMdd'))",
+							"value": "@concat('FlightStatus/oagstatus/', formatDateTime(utcnow(), 'yyyyMMdd'))",
 							"type": "Expression"
 						},
 						"container": "ingesteddata"
