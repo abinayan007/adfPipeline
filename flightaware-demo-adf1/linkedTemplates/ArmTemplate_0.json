@@ -453,10 +453,10 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"folderPath": {
-							"value": "@concat('output_', formatDateTime(utcnow(), 'yyyyMMddHHmmss'))",
+							"value": "@concat('FlightStatus/oagstatus', formatDateTime(utcnow(), 'yyyyMMdd'))",
 							"type": "Expression"
 						},
-						"container": "snowdata"
+						"container": "ingesteddata"
 					},
 					"columnDelimiter": ",",
 					"rowDelimiter": "\r\n",
@@ -557,10 +557,10 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"folderPath": {
-							"value": "@concat('FlightStatus/', formatDateTime(utcnow(), 'yyyyMMddHHmmss'))",
+							"value": "@concat('FlightStatus/aerostatus/', formatDateTime(utcnow(), 'yyyyMMdd'))",
 							"type": "Expression"
 						},
-						"container": "aeroapi"
+						"container": "ingesteddata"
 					}
 				},
 				"schema": {}
