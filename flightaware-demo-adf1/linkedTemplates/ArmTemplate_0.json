@@ -55,10 +55,6 @@
 			"type": "string",
 			"defaultValue": "https://flightaware-dev-key.vault.azure.net/"
 		},
-		"blob-storage-service_sasUri": {
-			"type": "secureString",
-			"metadata": "Secure string for 'sasUri' of 'blob-storage-service'"
-		},
 		"flightAware_properties_typeProperties_functionAppUrl": {
 			"type": "string",
 			"defaultValue": "https://flight-aware.azurewebsites.net"
@@ -66,6 +62,18 @@
 		"snowflakestorage_sasUri": {
 			"type": "secureString",
 			"metadata": "Secure string for 'sasUri' of 'snowflakestorage'"
+		},
+		"blob-storage-service_sasUri": {
+			"type": "secureString",
+			"metadata": "Secure string for 'sasUri' of 'blob-storage-service'"
+		},
+		"blob-storage-service_properties_typeProperties_sasToken_secretName": {
+			"type": "string",
+			"defaultValue": "blob-storage-key1"
+		},
+		"ls_oag_snowflake_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "OAG_SCHEDULES"
 		}
 	},
 	"variables": {
@@ -82,13 +90,7 @@
 				"typeProperties": {
 					"url": "[parameters('AeroApiRestService_properties_typeProperties_url')]",
 					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous",
-					"authHeaders": {
-						"x-apikey": {
-							"type": "SecureString",
-							"value": "**********"
-						}
-					}
+					"authenticationType": "Anonymous"
 				}
 			},
 			"dependsOn": []
@@ -198,19 +200,6 @@
 				"type": "AzureKeyVault",
 				"typeProperties": {
 					"baseUrl": "[parameters('akv-service_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/blob-storage-service')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"sasUri": "[parameters('blob-storage-service_sasUri')]"
 				}
 			},
 			"dependsOn": []
@@ -376,33 +365,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AeroApiSink')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "blob-storage-service",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": {
-							"value": "@concat('FlightStatus/aerostatus/', formatDateTime(utcnow(), 'yyyyMMdd'))",
-							"type": "Expression"
-						},
-						"container": "ingesteddata"
-					}
-				},
-				"schema": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/blob-storage-service')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/AeroApiSource')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -455,6 +417,127 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/OAGDirectSource')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OAGDirect",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": "/flight-instances/?version=v2&DepartureDateTime=2024-03-20"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OAGDirect')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pandemicdata')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "snowflakestorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "data"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/snowflakestorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/blob-storage-service')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"sasUri": "[parameters('blob-storage-service_sasUri')]",
+					"sasToken": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "akv-service",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "[parameters('blob-storage-service_properties_typeProperties_sasToken_secretName')]",
+						"secretVersion": "a95fed47a09645d2a8ddc0982705492f"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/akv-service')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_oag_snowflake')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SnowflakeV2",
+				"typeProperties": {
+					"authenticationType": "Basic",
+					"accountIdentifier": "ft63031.ap-southeast-1",
+					"user": "g.ramadoss@ncs.co",
+					"database": "[parameters('ls_oag_snowflake_properties_typeProperties_database')]",
+					"warehouse": "GENERAL",
+					"password": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "akv-service",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "snowPassword"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/akv-service')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AeroApiSink')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob-storage-service",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": {
+							"value": "@concat('FlightStatus/aerostatus/', formatDateTime(utcnow(), 'yyyyMMdd'))",
+							"type": "Expression"
+						},
+						"container": "ingesteddata"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/blob-storage-service')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/OAGDirectSink')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -483,81 +566,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/blob-storage-service')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OAGDirectSource')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OAGDirect",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "RestResource",
-				"typeProperties": {
-					"relativeUrl": "/flight-instances/?version=v2&DepartureDateTime=2024-03-20"
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OAGDirect')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SnowflakeSink')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "blob-storage-service",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": {
-							"value": "@concat('FlightStatus/oagstatus/', formatDateTime(utcnow(), 'yyyyMMdd'))",
-							"type": "Expression"
-						},
-						"container": "ingesteddata"
-					},
-					"columnDelimiter": ",",
-					"rowDelimiter": "\r\n",
-					"escapeChar": "\\",
-					"firstRowAsHeader": false,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/blob-storage-service')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pandemicdata')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "snowflakestorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"container": "data"
-					}
-				},
-				"schema": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/snowflakestorage')]"
 			]
 		}
 	]

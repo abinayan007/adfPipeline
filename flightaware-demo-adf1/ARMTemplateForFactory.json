@@ -59,6 +59,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'sasUri' of 'blob-storage-service'"
 		},
+		"blob-storage-service_properties_typeProperties_sasToken_secretName": {
+			"type": "string",
+			"defaultValue": "blob-storage-key1"
+		},
 		"flightAware_properties_typeProperties_functionAppUrl": {
 			"type": "string",
 			"defaultValue": "https://flight-aware.azurewebsites.net"
@@ -618,13 +622,7 @@
 				"typeProperties": {
 					"url": "[parameters('AeroApiRestService_properties_typeProperties_url')]",
 					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous",
-					"authHeaders": {
-						"x-apikey": {
-							"type": "SecureString",
-							"value": "**********"
-						}
-					}
+					"authenticationType": "Anonymous"
 				}
 			},
 			"dependsOn": []
@@ -746,10 +744,21 @@
 				"annotations": [],
 				"type": "AzureBlobStorage",
 				"typeProperties": {
-					"sasUri": "[parameters('blob-storage-service_sasUri')]"
+					"sasUri": "[parameters('blob-storage-service_sasUri')]",
+					"sasToken": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "akv-service",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "[parameters('blob-storage-service_properties_typeProperties_sasToken_secretName')]",
+						"secretVersion": "a95fed47a09645d2a8ddc0982705492f"
+					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/akv-service')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/flightAware')]",

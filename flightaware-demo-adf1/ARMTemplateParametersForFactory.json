@@ -44,6 +44,9 @@
 		"blob-storage-service_sasUri": {
 			"value": ""
 		},
+		"blob-storage-service_properties_typeProperties_sasToken_secretName": {
+			"value": "blob-storage-key1"
+		},
 		"flightAware_properties_typeProperties_functionAppUrl": {
 			"value": "https://flight-aware.azurewebsites.net"
 		},
