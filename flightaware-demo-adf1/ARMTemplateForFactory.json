@@ -104,6 +104,12 @@
 								"httpRequestTimeout": "00:01:40",
 								"requestInterval": "00.00:00:00.010",
 								"requestMethod": "GET",
+								"additionalHeaders": {
+									"x-apikey": {
+										"value": "@Microsoft.KeyVault(SecretUri='https://flightaware-dev-key.vault.azure.net/secrets/aeroKey/ec96c77093ce417193b9d8ee02562c76')",
+										"type": "Expression"
+									}
+								},
 								"paginationRules": {
 									"supportRFC5988": "true"
 								}
