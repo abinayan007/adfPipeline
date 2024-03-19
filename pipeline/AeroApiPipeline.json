@@ -21,7 +21,10 @@
 						"requestInterval": "00.00:00:00.010",
 						"requestMethod": "GET",
 						"additionalHeaders": {
-							"x-apikey": "kLA87iPYkPK61RdlIuYhG3txILFktnQz"
+							"x-apikey": {
+								"value": "@Microsoft.KeyVault(SecretUri='https://caas-akv-dev-01.vault.azure.net/secrets/aeroKey1/584a1602dc394ba889dd2b8faa37ae44')",
+								"type": "Expression"
+							}
 						},
 						"paginationRules": {
 							"supportRFC5988": "true"
