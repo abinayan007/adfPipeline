@@ -22,7 +22,7 @@
 						"requestMethod": "GET",
 						"additionalHeaders": {
 							"x-apikey": {
-								"value": "@Microsoft.KeyVault(SecretUri='https://flightaware-dev-key.vault.azure.net/secrets/aeroKey/ec96c77093ce417193b9d8ee02562c76')",
+								"value": "@Microsoft.KeyVault(SecretUri='https://caas-akv-dev-01.vault.azure.net/secrets/aeroKey/e5f7197d690b4e2f8059a933a735382c')",
 								"type": "Expression"
 							}
 						},
