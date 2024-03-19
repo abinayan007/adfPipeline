@@ -55,6 +55,9 @@
 		},
 		"snowflakestorage_sasUri": {
 			"value": ""
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://caas-akv-dev-01.vault.azure.net/"
 		}
 	}
 }

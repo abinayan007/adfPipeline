@@ -13,6 +13,35 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/OAGDirectSink')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "blob-storage-service",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@concat('output_', formatDateTime(utcnow(), 'yyyyMMddHHmmss'), '.json')",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@concat('FlightInfo/oaginfo/', formatDateTime(utcnow(), 'yyyyMMdd'))",
+							"type": "Expression"
+						},
+						"container": "ingesteddata"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SnowflakeSink')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -87,7 +116,7 @@
 								"requestMethod": "GET",
 								"additionalHeaders": {
 									"x-apikey": {
-										"value": "@Microsoft.KeyVault(SecretUri='https://flightaware-dev-key.vault.azure.net/secrets/aeroKey/ec96c77093ce417193b9d8ee02562c76')",
+										"value": "@Microsoft.KeyVault(SecretUri='https://caas-akv-dev-01.vault.azure.net/secrets/aeroKey/e5f7197d690b4e2f8059a933a735382c')",
 										"type": "Expression"
 									}
 								},
@@ -192,7 +221,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/OAGDirectSink')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/OAGSnowflakePipeline')]",
