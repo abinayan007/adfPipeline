@@ -11,10 +11,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'functionKey' of 'AzureFunction1'"
 		},
-		"AzureFunctionTest_functionKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'functionKey' of 'AzureFunctionTest'"
-		},
 		"Flight_Aware_Firehose_functionKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'functionKey' of 'Flight_Aware_Firehose'"
@@ -109,9 +105,6 @@
 					"AzureFunction1_functionKey": {
 						"value": "[parameters('AzureFunction1_functionKey')]"
 					},
-					"AzureFunctionTest_functionKey": {
-						"value": "[parameters('AzureFunctionTest_functionKey')]"
-					},
 					"Flight_Aware_Firehose_functionKey": {
 						"value": "[parameters('Flight_Aware_Firehose_functionKey')]"
 					},
@@ -126,9 +119,6 @@
 					},
 					"AzureFunction1_properties_typeProperties_functionAppUrl": {
 						"value": "[parameters('AzureFunction1_properties_typeProperties_functionAppUrl')]"
-					},
-					"AzureFunctionTest_properties_typeProperties_functionAppUrl": {
-						"value": "[parameters('AzureFunctionTest_properties_typeProperties_functionAppUrl')]"
 					},
 					"Flight_Aware_Firehose_properties_typeProperties_functionAppUrl": {
 						"value": "[parameters('Flight_Aware_Firehose_properties_typeProperties_functionAppUrl')]"
@@ -150,6 +140,9 @@
 					},
 					"AzureKeyVault1_properties_typeProperties_baseUrl": {
 						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+					},
+					"AzureFunctionTest_properties_typeProperties_functionAppUrl": {
+						"value": "[parameters('AzureFunctionTest_properties_typeProperties_functionAppUrl')]"
 					},
 					"blob-storage-service_sasUri": {
 						"value": "[parameters('blob-storage-service_sasUri')]"

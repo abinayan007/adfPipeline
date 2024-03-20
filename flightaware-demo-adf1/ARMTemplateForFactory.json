@@ -11,10 +11,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'functionKey' of 'AzureFunction1'"
 		},
-		"AzureFunctionTest_functionKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'functionKey' of 'AzureFunctionTest'"
-		},
 		"Flight_Aware_Firehose_functionKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'functionKey' of 'Flight_Aware_Firehose'"
@@ -109,10 +105,7 @@
 								"requestInterval": "00.00:00:00.010",
 								"requestMethod": "GET",
 								"additionalHeaders": {
-									"x-apikey": {
-										"value": "Microsoft.KeyVault(SecretUri='https://caas-akv-dev-01.vault.azure.net/secrets/aerokey2/370e22bd9e1e4d9cb9b940a519addc5d')",
-										"type": "Expression"
-									}
+									"x-apikey": "kLA87iPYkPK61RdlIuYhG3txILFktnQz"
 								},
 								"paginationRules": {
 									"supportRFC5988": "true"
@@ -665,13 +658,19 @@
 				"typeProperties": {
 					"functionAppUrl": "[parameters('AzureFunctionTest_properties_typeProperties_functionAppUrl')]",
 					"functionKey": {
-						"type": "SecureString",
-						"value": "[parameters('AzureFunctionTest_functionKey')]"
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "akv-service",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "aeroKey"
 					},
 					"authentication": "Anonymous"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/akv-service')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Flight_Aware_Firehose')]",
