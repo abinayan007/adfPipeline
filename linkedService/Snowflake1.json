@@ -6,7 +6,7 @@
 		"type": "SnowflakeV2",
 		"typeProperties": {
 			"authenticationType": "Basic",
-			"accountIdentifier": "https://ft63031.ap-southeast-1.snowflakecomputing.com/",
+			"accountIdentifier": "https://ft63031.ap-southeast-1",
 			"user": "g.ramadoss@ncs.co",
 			"database": "OAG_SCHEDULES",
 			"warehouse": "DIRECT_CUSTOMER_CONFIGURATIONS",
