@@ -11,9 +11,6 @@
 		"Flight_Aware_Firehose_functionKey": {
 			"value": ""
 		},
-		"Snowflake1_password": {
-			"value": ""
-		},
 		"flightAware_functionKey": {
 			"value": ""
 		},
@@ -26,14 +23,14 @@
 		"AzureFunctionTest_properties_typeProperties_functionAppUrl": {
 			"value": "https://azuretesting1234.azurewebsites.net"
 		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://caas-akv-dev-01.vault.azure.net/"
+		},
 		"Flight_Aware_Firehose_properties_typeProperties_functionAppUrl": {
 			"value": "https://flight-aware-test.azurewebsites.net"
 		},
 		"OAGDirect_properties_typeProperties_url": {
 			"value": "https://api.oag.com"
-		},
-		"Snowflake1_properties_typeProperties_database": {
-			"value": "OAG_SCHEDULES"
 		},
 		"akv-service_properties_typeProperties_baseUrl": {
 			"value": "https://flightaware-dev-key.vault.azure.net/"
@@ -52,9 +49,6 @@
 		},
 		"snowflakestorage_sasUri": {
 			"value": ""
-		},
-		"AzureKeyVault1_properties_typeProperties_baseUrl": {
-			"value": "https://caas-akv-dev-01.vault.azure.net/"
 		},
 		"containerUri": {
 			"value": ""

@@ -13,35 +13,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/OAGDirectSink')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "blob-storage-service",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@concat('output_', formatDateTime(utcnow(), 'yyyyMMddHHmmss'), '.json')",
-							"type": "Expression"
-						},
-						"folderPath": {
-							"value": "@concat('FlightInfo/oaginfo/', formatDateTime(utcnow(), 'yyyyMMdd'))",
-							"type": "Expression"
-						},
-						"container": "ingesteddata"
-					}
-				},
-				"schema": {}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/SnowflakeSink')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -218,9 +189,7 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/OAGDirectSink')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/OAGSnowflakePipeline')]",

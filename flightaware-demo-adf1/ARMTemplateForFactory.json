@@ -15,10 +15,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'functionKey' of 'Flight_Aware_Firehose'"
 		},
-		"Snowflake1_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'Snowflake1'"
-		},
 		"flightAware_functionKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'functionKey' of 'flightAware'"
@@ -35,6 +31,10 @@
 			"type": "string",
 			"defaultValue": "https://azuretesting1234.azurewebsites.net"
 		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://caas-akv-dev-01.vault.azure.net/"
+		},
 		"Flight_Aware_Firehose_properties_typeProperties_functionAppUrl": {
 			"type": "string",
 			"defaultValue": "https://flight-aware-test.azurewebsites.net"
@@ -42,10 +42,6 @@
 		"OAGDirect_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://api.oag.com"
-		},
-		"Snowflake1_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "OAG_SCHEDULES"
 		},
 		"akv-service_properties_typeProperties_baseUrl": {
 			"type": "string",
@@ -70,10 +66,6 @@
 		"snowflakestorage_sasUri": {
 			"type": "secureString",
 			"metadata": "Secure string for 'sasUri' of 'snowflakestorage'"
-		},
-		"AzureKeyVault1_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://caas-akv-dev-01.vault.azure.net/"
 		}
 	},
 	"variables": {
@@ -673,6 +665,19 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureKeyVault1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Flight_Aware_Firehose')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -706,27 +711,6 @@
 							"type": "SecureString",
 							"value": "**********"
 						}
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Snowflake1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SnowflakeV2",
-				"typeProperties": {
-					"authenticationType": "Basic",
-					"accountIdentifier": "https://ft63031.ap-southeast-1.snowflakecomputing.com/",
-					"user": "g.ramadoss@ncs.co",
-					"database": "[parameters('Snowflake1_properties_typeProperties_database')]",
-					"warehouse": "DIRECT_CUSTOMER_CONFIGURATIONS",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('Snowflake1_password')]"
 					}
 				}
 			},
@@ -823,19 +807,6 @@
 				"type": "AzureBlobStorage",
 				"typeProperties": {
 					"sasUri": "[parameters('snowflakestorage_sasUri')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureKeyVault1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureKeyVault",
-				"typeProperties": {
-					"baseUrl": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
 				}
 			},
 			"dependsOn": []
