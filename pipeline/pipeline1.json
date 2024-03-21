@@ -21,10 +21,6 @@
 						"precom": "live",
 						"postcom": ""
 					}
-				},
-				"linkedServiceName": {
-					"referenceName": "AzureFunctionTest",
-					"type": "LinkedServiceReference"
 				}
 			}
 		],
